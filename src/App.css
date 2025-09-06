@@ -1,0 +1,122 @@
+
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color: #0F1419; /* Dark text color */
+  background-color: #FFFFFF; /* White background */
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+#root {
+  width: 100%;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.App-header h1 {
+  font-size: 2.5em;
+  margin-bottom: 1rem;
+  color: #0F1419;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  text-align: left;
+  width: 100%;
+}
+
+.config-editor, .tester {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0; /* Add this to prevent overflow in flexbox */
+}
+
+/* This style is now handled by the Monaco Editor component props */
+.config-editor .monaco-editor {
+  border: 1px solid #CFD9DE;
+  border-radius: 8px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.input-group label {
+  font-weight: 500;
+}
+
+.input-group input {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #CFD9DE; /* Light grey border */
+  background-color: #F6F8FA; /* Very light grey background */
+  color: #0F1419;
+  font-size: 1em;
+}
+
+.input-group button {
+  padding: 10px 15px;
+  border-radius: 8px;
+  border: none;
+  font-size: 1em;
+  font-weight: bold;
+  font-family: inherit;
+  background-color: #1DA1F2; /* Twitter Blue */
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.25s;
+}
+
+.input-group button:hover {
+  background-color: #0C85D0; /* Darker Twitter Blue */
+}
+
+.input-group button:disabled {
+  background-color: #AAB8C2;
+  cursor: not-allowed;
+}
+
+.results h2 {
+  margin-top: 0;
+}
+
+.error-box, .result-box, .placeholder-box {
+  padding: 1rem;
+  border-radius: 8px;
+  background-color: #F6F8FA; /* Very light grey background */
+  border: 1px solid #CFD9DE; /* Light grey border */
+}
+
+.error-box {
+  color: #D93025;
+  border-color: #FAD2CF;
+  background-color: #FEEBEE;
+}
+
+.result-box code {
+  background-color: #E1E8ED;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: monospace;
+}
+
+.result-box span {
+  font-weight: bold;
+  color: #1DA1F2; /* Twitter Blue for the policy */
+}
