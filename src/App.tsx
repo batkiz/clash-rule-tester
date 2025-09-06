@@ -7,40 +7,57 @@ import Editor from '@monaco-editor/react';
 import './App.css';
 
 const initialConfig = `
-# A more realistic example with a rule provider
+# this is an example config
 rule-providers:
   reject:
     type: http
     behavior: domain
-    format: text # Explicitly set format
-    url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/reject.txt"
-    path: ./ruleset/reject.txt
+    url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/reject.txt"
+    path: ./ruleset/reject.yaml
     interval: 86400
-  cnip:
+
+  private:
+    type: http
+    behavior: domain
+    url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/private.txt"
+    path: ./ruleset/private.yaml
+    interval: 86400
+
+  tld-not-cn:
+    type: http
+    behavior: domain
+    url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/tld-not-cn.txt"
+    path: ./ruleset/tld-not-cn.yaml
+    interval: 86400
+
+  gfw:
+    type: http
+    behavior: domain
+    url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/gfw.txt"
+    path: ./ruleset/gfw.yaml
+    interval: 86400
+
+  telegramcidr:
     type: http
     behavior: ipcidr
-    format: text # Explicitly set format
-    url: "https://raw.githubusercontent.com/Loyalsoldier/clash-rules/release/cnip.txt"
-    path: ./ruleset/cnip.txt
+    url: "https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/telegramcidr.txt"
+    path: ./ruleset/telegramcidr.yaml
     interval: 86400
-  # Example of an inline provider
-  inline-provider:
-    type: inline
-    behavior: classical # Use classical for TYPE,VALUE format
-    payload:
-      - 'DOMAIN-SUFFIX,inline-test.com'
 
 rules:
+  - DOMAIN,clash.razord.top,DIRECT
+  - DOMAIN,yacd.haishan.me,DIRECT
+  - RULE-SET,private,DIRECT
   - RULE-SET,reject,REJECT
-  - RULE-SET,cnip,DIRECT
-  - RULE-SET,inline-provider,PROXY
-  - DOMAIN-SUFFIX,google.com,PROXY
-  - MATCH,PROXY
+  - RULE-SET,tld-not-cn,PROXY
+  - RULE-SET,gfw,PROXY
+  - RULE-SET,telegramcidr,PROXY
+  - MATCH,DIRECT
 `;
 
 function App() {
   const [configYaml, setConfigYaml] = useState(initialConfig);
-  const [domain, setDomain] = useState('test.inline-test.com');
+  const [domain, setDomain] = useState('www.google.com');
   const [result, setResult] = useState<MatchResult | null>(null);
   const [error, setError] = useState<string>('');
   const [isLoading, setIsLoading] = useState(false);
@@ -58,8 +75,12 @@ function App() {
       } else {
         setError(`No rule matched for domain: ${domain}`);
       }
-    } catch (e: any) {
-      setError(e.message || 'An unknown error occurred.');
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        setError(e.message || 'An unknown error occurred.');
+      } else {
+        setError('An unknown error occurred.');
+      }
     } finally {
       setIsLoading(false);
     }
