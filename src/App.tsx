@@ -96,6 +96,9 @@ function App() {
     <div className="App">
       <header className="App-header">
         <h1>Clash Rule Tester</h1>
+        <a href="https://github.com/batkiz/clash-rule-tester" target="_blank" rel="noopener noreferrer" style={{ color: '#1DA1F2' }}>
+          GitHub
+        </a>
       </header>
       <main className="container">
         <div className="config-editor">
